@@ -1,0 +1,41 @@
+{
+   "name": "backend",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "devDependencies": {
+      "@commitlint/cli": "^9.1.2",
+      "@types/node": "^8.0.29",
+      "commitizen": "^4.2.1",
+      "cz-conventional-changelog": "^3.3.0",
+      "husky": "^4.2.5",
+      "lint-staged": "^10.3.0",
+      "nodemon": "^2.0.4",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   },
+   "dependencies": {
+      "body-parser": "^1.18.1",
+      "cors": "^2.8.5",
+      "express": "^4.15.4",
+      "jimp": "^0.16.0",
+      "jsonwebtoken": "^8.5.1",
+      "md5": "^2.3.0",
+      "mysql": "^2.18.1",
+      "pg": "^7.3.0",
+      "reflect-metadata": "^0.1.10",
+      "ts-node-dev": "^1.0.0-pre.57",
+      "typeorm": "0.2.25"
+   },
+
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "dev:server": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts --delay 1500ms",
+      "test:unit": "jest",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "lint": "eslint ./src ./test --ext .ts",
+      "lint:fix": "eslint ./src ./test --ext .ts --fix",
+      "test:functional": "jest --projects ./test --forceExit --runInBand",
+      "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
+      "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+    }
+}

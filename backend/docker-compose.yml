@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  app:
+    container_name: gobarber-api
+    build: .
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+    links:
+      - postgres
+      - redis
+      - mongo
+    command: npm run dev
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    environment:
+      NODE_ENV: dev
+      PORT: 3000
+      DB_HOST: postgres
+  jobs:
+    container_name: gobarber-jobs
+    image: node:dubnium-alpine
+    working_dir: /usr/jobs
+    command: sh -c "yarn install && yarn build && yarn queue"
+    volumes:
+      - .:/usr/jobs
+    links:
+      - postgres
+      - redis
+      - mongo
+    environment:
+      NODE_ENV: dev
+      DB_HOST: postgres
+  postgres:
+    container_name: gobarber-postgres
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: gobarber
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 46b7c9444562074a690ff94e53841c5d
+  mongo:
+    container_name: gobarber-mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root_mongo
+      MONGO_INITDB_ROOT_PASSWORD: 46b7c9444562074a690ff94e53841c5d
+    ports:
+      - "27017:27017"
+  redis:
+    container_name: gobarber-redis
+    image: redis:alpine
+    expose:
+      - 6379
